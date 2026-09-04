@@ -32,8 +32,26 @@ The panel has 5,346 developers and 149,688 developer-months, built from 3.15 mil
 
 Quispe–Xu model AI as a delegated-execution option lowering language-specific entry thresholds. Aouad–Lykouris–Zhong model AI, skill and effort as perfectly substitutable inputs, allowing AI to crowd out effort and generate deskilling. The opposite predictions reflect extensive-margin menu expansion versus intensive-margin substitution.
 
-## Lean status — FAIL/BLOCKED
+## Lean status — PARTIAL / scaffold not created
 
-EconCSLib was cloned outside this repository and its workflow inspected. No formalization run completed: `elan`, `lean`, and `lake` are unavailable, and native Windows Python fails on the Unix-only `fcntl` dependency. No `papers/QX26AgenticDelegation/` output exists, so no `lean/` directory is submitted. Nothing was copied from the worked example. This is a blocked execution, **not** a partial Lean formalization.
+**Initial blocker.** In the first delivery, Elan, Lean and Lake were unavailable and native Windows Python failed on the Unix-only `fcntl` dependency.
 
-The handwritten derivation and compiled presentation PDF are also absent at emergency closeout. LaTeX was unavailable; only `presentation.tex` is current.
+**Final Lean run (our execution).** The second phase ran from `/home/william/EconCSLib` under WSL. `paper_contribution.py doctor` verified Python 3.14.4, Git, Lake 5.0.0 and Lean 4.30.0-rc2; only optional `pdftotext` and `latexmk` were missing. The exact arXiv v2 TeX archive was kept outside both public repositories and pinned by SHA-256. A private statement spec inventoried Propositions 1--5, splitting Proposition 3 into its weak and printed-strict clauses.
+
+The official `new` command then failed during Spec validation because the root `EconCSLib` module had not yet been built. The generator rolled back `papers/QX26AgenticDelegation/`. A base-library build made substantial progress but was stopped on instruction before completion. Consequently the immediate fast check returned exactly:
+
+```text
+error: could not read papers/QX26AgenticDelegation/status.json: [Errno 2] No such file or directory: '/home/william/EconCSLib/papers/QX26AgenticDelegation/status.json'
+```
+
+There is therefore no generated paper folder to copy into `lean/`. No Lean theorem proof was completed, no PASS is claimed, and nothing came from the worked example. The source archive and statement spec remain private.
+
+## Proposition 3 fidelity verdict
+
+The printed weak inequality is valid for hazards satisfying $0\le p^1\le p^2\le1$. In the closed-frontier case $p^1=0$, the increment is
+
+$$\Delta C(s+1)-\Delta C(s)=p^2(1-p^2)^{s+1}.$$
+
+Thus strict growth holds for $0<p^2<1$, but fails at the source-permitted endpoint $p^2=1$. Strict concavity has the same endpoint problem. Aggregated strictness also needs a nonempty unfamiliar-language set with at least one interior hazard. This is an independent mathematical/fidelity finding, not a compiled Lean result.
+
+The handwritten derivation is included at `hand/prop3-endpoint.jpg`. `presentation.pdf` remains missing because `latexmk` is not installed; this did not block the Lean checks.
