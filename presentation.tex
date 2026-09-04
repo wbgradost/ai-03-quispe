@@ -1,114 +1,48 @@
-\documentclass[aspectratio=169,11pt]{beamer}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage[english]{babel}
-\usepackage{amsmath,amssymb}
-\usepackage{booktabs}
-\usetheme{default}
-\usecolortheme{seahorse}
-\setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{footline}[frame number]
-\setbeamerfont{frametitle}{size=\large}
-
-\title{Aouad, Lykouris \& Zhong (2026)}
-\subtitle{\emph{Human-AI Productivity Paradoxes} --- Section 2}
-\author{Alexander Quispe}
-\date{Repository 1 \textperiodcentered{} Week of August 17--22}
-
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{amsmath}
+\title{Agentic Delegation and the Language Frontier}
+\author{William B. Grados T.}
+\institute{\url{https://github.com/wbgradost/ai-03-quispe}}
+\date{September 2026}
 \begin{document}
-
-%================= PORTADA (con el enlace al repositorio) =============
-\begin{frame}[plain]
-  \titlepage
-  \begin{center}\small
-    \texttt{github.com/alexanderquispe/ai-01-aouad}
-  \end{center}
+\begin{frame}\titlepage\end{frame}
+\begin{frame}{Citation audit}
+\small Baseline: inferred Quispe, Claude Code and expansion beyond prior training. Verified v2: Alexander Quispe and Kevin Xu; \emph{Agentic Delegation and the Language Frontier of Software Developers: A Model and Evidence from Claude Code on GitHub}; v1 May 25, v2 July 7, 2026. The evidence is an observational developer-month panel, not an experiment.
 \end{frame}
-
-%================= 1. EL ART\'ICULO ====================================
-\begin{frame}{1 \textperiodcentered{} The paper and the agent's problem}
-  \textbf{Question.} When does AI assistance make a worker \emph{less} productive?
-
-  \medskip
-  \textbf{The single mechanism.} AI is a \emph{perfectly substitutable input}:
-  skill, effort and assistance enter production only through their sum.
-  \[ x \;=\; s + e + a \]
-
-  \medskip
-  \textbf{The agent's problem.} Choose effort $e$ to maximise output net of a
-  \emph{linear} cost:
-  \[ \max_{e \ge 0}\; p(s+e+a) \;-\; \gamma e \]
-
-  \smallskip
-  \begin{itemize}\small
-    \item $p$ weakly increasing, concave, twice differentiable; $\gamma>0$.
-    \item Only constraint: $e \ge 0$ --- and it binds. That is the whole result.
-  \end{itemize}
+\begin{frame}{Agent problem and activation band}
+\[V^g=\max_{m\in\mathcal M_g}V^m,\quad Z^g=\mathbf 1\{V^g\ge0\},\quad \mathcal M_1=\{S,C\}\subset\mathcal M_2=\{S,C,D\}.\]
+For unfamiliar languages, conversational help leaves $T^S$ unchanged. If $B=T^S-T^D>0$,
+\[Z^2-Z^1=\mathbf 1\{T^D\le\omega<T^S\}.\]
+Delegation makes the middle band feasible. This expands a production frontier, not necessarily human skill.
 \end{frame}
-
-%================= 2. EL RESULTADO ===================================
-\begin{frame}{2 \textperiodcentered{} Proposition 2.1, with all its conditions}
-  Define $x^{*}$ as the \emph{largest} maximiser of $p(x)-\gamma x$:
-  \[ x^{*} \;=\; \max\,\arg\max_{x}\;\bigl[\,p(x)-\gamma x\,\bigr] \]
-
-  \textbf{Regularity condition} (without it $x^{*}$ need not exist):
-  \[ \limsup_{x\to\infty} \frac{p(x)}{x} \;<\; \gamma \]
-
-  \medskip
-  \textbf{Then}
-  \[ e^{*}(s,a) = \bigl(x^{*}-s-a\bigr)_{+}, \qquad
-     p^{*}(s,a) = \max\bigl\{\,p(x^{*}),\; p(s+a)\,\bigr\} \]
-
-  \medskip
-  \footnotesize\emph{Intuition.} The agent has one target level of total input;
-  he tops it up with effort, and once skill plus AI already reach it he simply
-  stops working.
+\begin{frame}{Results and conditions}
+\begin{itemize}
+\item Menu inclusion: $Z^2\ge Z^1$, $N^2\ge N^1$ path by path.
+\item Activation band: unfamiliar language, Assumption 1, $B>0$.
+\item Continuous $F$: activation probability $F(T^S)-F(T^D)$.
+\item Cumulative effect nonnegative for $0\le p^1\le p^2\le1$.
+\item Strict expansion requires positive mass and a nonempty band.
+\end{itemize}
 \end{frame}
-
-%================= 3. LO QUE HICE ====================================
-\begin{frame}{3 \textperiodcentered{} What I did}
-  \textbf{Reproduced} Proposition 2.1 by hand --- the interior-versus-corner
-  split, with no differentiation in the proof (\texttt{hand/}).
-
-  \medskip
-  \textbf{Assumptions I considered relaxing}
-  \begin{itemize}\small
-    \item \textbf{Linear cost $\to$ convex.} \emph{Dead end}: the authors already
-      do it in Appendix D (Props. D.3, D.6). Replication, not extension.
-    \item \textbf{Myopia.} A two-period agent who internalises skill dynamics.
-      Never relaxed anywhere in the paper --- this is the live one.
-    \item \textbf{Complementarity inside $p(\cdot)$} rather than as an added
-      interaction term. Harder: \S{}4.4 and \S{}5.3 partly pre-empt it.
-  \end{itemize}
-
-  \medskip
-  \textbf{Also produced} a full step-by-step tutorial of the paper and two
-  lecture decks (\texttt{extra/}).
+\begin{frame}{Independent check: Proposition 3}
+For $p^1=0$, $\Delta(s)=1-(1-p^2)^{s+1}$ and
+\[\Delta(s+1)-\Delta(s)=p^2(1-p^2)^{s+1}.\]
+At the permitted endpoint $p^2=1$, $\Delta(s)=1$ for all $s\ge0$. The printed strict-growth/strict-concavity claim fails there. Correct strict domain: $0<p^2<1$, with a nonempty relevant candidate set.
 \end{frame}
-
-%================= 4. LA IA =========================================
-\begin{frame}{4 \textperiodcentered{} Where I did not believe the AI}
-  \textbf{What I asked.} ``What is the most natural extension of this model?''
-
-  \medskip
-  \textbf{What the model answered.} Relax the linear cost $c(e)=\gamma e$ to a
-  strictly convex $c(e)$ --- presented confidently as an open direction.
-
-  \medskip
-  \textbf{My verdict: \textcolor{red}{incorrect as an extension}.}
-  \begin{itemize}\small
-    \item Appendix D is titled \emph{``Extension to convex cost functions''} and
-      redoes Sections 2--4 under strictly convex cost.
-    \item So the proposal is already in the paper. I checked the appendix
-      directly rather than taking the answer at face value.
-    \item \emph{Caveat worth keeping:} Appendix D covers \S\S{}2--4 but \textbf{not}
-      \S{}5, so convex cost applied to the skill-polarisation result is genuinely
-      untouched.
-  \end{itemize}
-
-  \medskip
-  \footnotesize The step I re-derived by hand is in \texttt{hand/} --- I did not
-  trust the algebra of the first-order condition until I had written it out.
+\begin{frame}{Evidence and causal limit}
+5,346 developers, 149,688 developer-months, 57.2 million changed files. Adoption-month estimates: languages $+2.53$, new languages $+1.19$, entropy $+0.382$, cumulative breadth $+1.604$. Robust event-time association, but voluntary adoption may coincide with an unfamiliar-language project shock; causality is not settled.
 \end{frame}
-
+\begin{frame}{Frontier expansion versus deskilling}
+Quispe--Xu: AI adds delegated execution and lowers language-specific entry thresholds (extensive margin). Aouad--Lykouris--Zhong: AI, skill and effort are perfectly substitutable, so AI can crowd out effort (intensive margin).
+\end{frame}
+\begin{frame}{Lean status: FAIL/BLOCKED}
+\begin{itemize}
+\item EconCSLib cloned outside this repository; workflow inspected.
+\item Elan, Lean and Lake unavailable; Windows Python fails on \texttt{fcntl}.
+\item No formalization run completed and no generated paper folder exists.
+\item No \texttt{lean/} was invented; nothing copied from the worked example.
+\end{itemize}
+The endpoint calculation is a manual mathematical audit, not a Lean result from our run.
+\end{frame}
 \end{document}

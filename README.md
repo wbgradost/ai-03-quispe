@@ -1,103 +1,39 @@
-# Repository 1 — Aouad, Lykouris & Zhong (2026)
+# Repository 3 — Quispe & Xu (2026)
 
-*Human-AI Productivity Paradoxes: Modeling the Interplay of Skill, Effort, and AI Assistance*
-[arXiv:2605.11350](https://arxiv.org/abs/2605.11350) · [cs.GT]
+Repository: https://github.com/wbgradost/ai-03-quispe
 
-> **This is the worked example** for *Artificial Intelligence and Economic
-> Modeling* (UP 2026-II). It shows what a weekly repository looks like when it is
-> done well. Yours does not have to be this long — see "What is required" below.
+Paper: Alexander Quispe and Kevin Xu, *Agentic Delegation and the Language Frontier of Software Developers: A Model and Evidence from Claude Code on GitHub*, arXiv:2605.25438v2 (v1: 25 May 2026; v2: 7 July 2026).
 
----
+## Question, agent and mechanism
 
-## What question the paper answers
+The paper asks whether agentic coding assistance expands the programming-language set in which a developer can produce. This is a **production frontier**, not a skill frontier: shipping Rust through delegation does not imply writing Rust unassisted.
 
-When does AI assistance make a worker **less** productive?
+For each developer-language-month, the developer chooses the mode with highest certainty-equivalent surplus and activates the language if that surplus is nonnegative. Before adoption, $\mathcal M_1=\{S,C\}$ (solo, conversational); afterward, $\mathcal M_2=\{S,C,D\}$ adds delegation. For an unfamiliar language, Assumption 1 makes conversational assistance leave the solo threshold unchanged. Define
 
-The paper picks one mechanism and pushes it: AI is a **perfectly substitutable
-input**. Skill $s$, effort $e$ and assistance $a$ enter production only through
-their sum, $x = s + e + a$. Nothing else is going on — no learning, no
-complementarity, no contracting. Everything that follows comes from that single
-modelling choice plus a linear cost of effort.
+$$B=T^S-T^D=\lambda[az(A)-s\mu]-\kappa(a,s)-r_D+\frac{\rho}{2}\left[\frac{(2\lambda-\lambda^2)s^2}{\pi}-\sigma_D^2(a,s,A)\right].$$
 
-## The agent's problem
+If $B>0$, opportunities in $[T^D,T^S)$ become feasible only with delegation. Agent capability affects execution, verification costs and error risk; the developer supplies general specification-and-verification ability.
 
-$$\max_{e \ge 0}\; p(s+e+a) - \gamma e$$
+## Results and independent check
 
-with $p$ weakly increasing, concave and twice differentiable, $\gamma > 0$, and
-one constraint that turns out to carry the whole result: $e \ge 0$.
+Menu inclusion gives $Z^2\ge Z^1$ and $N^2\ge N^1$ path by path. For an unfamiliar language satisfying Assumption 1 and $B>0$,
 
-## The main result, with all its conditions
+$$Z^2-Z^1=\mathbf 1\{T^D\le\omega<T^S\}.$$
 
-Let $x^{*}$ be the **largest** maximiser of $p(x) - \gamma x$:
+With continuous $F$, activation probability is $F(T^S)-F(T^D)$. Proposition 3 gives
 
-$$x^{*} = \max \arg\max_{x} \left[\, p(x) - \gamma x \,\right]$$
+$$\Delta C_i(s)=\sum_{k\in\mathcal U_i}[(1-p^1_{ik})^{s+1}-(1-p^2_{ik})^{s+1}]\ge0$$
 
-This requires a **regularity condition**, without which $x^{*}$ need not exist:
+when $0\le p^1_{ik}\le p^2_{ik}\le1$. Our independent endpoint check finds that the paper's strict-growth/strict-concavity claim under $p^1=0<p^2$ fails at $p^2=1$: then $\Delta(s)=1$ for every $s\ge0$. Strictness requires $0<p^2<1$ and a nonempty relevant candidate set.
 
-$$\limsup_{x \to \infty} \frac{p(x)}{x} < \gamma$$
+## Evidence, identification and comparison
 
-**Proposition 2.1.** Under those conditions,
+The panel has 5,346 developers and 149,688 developer-months, built from 3.15 million commits and 57.2 million changed files. Doubly robust staggered-adoption event studies find at adoption: active languages $+2.53$, newly used $+1.19$, entropy $+0.382$, cumulative breadth $+1.604$. Robustness checks address mechanical counting and activity composition. These are event-time associations, not definitive causal effects: voluntary adoption may coincide with an unobserved new-project shock.
 
-$$e^{*}(s,a) = \left(x^{*} - s - a\right)_{+}, \qquad
-  p^{*}(s,a) = \max\left\{ p(x^{*}),\, p(s+a) \right\}$$
+Quispe–Xu model AI as a delegated-execution option lowering language-specific entry thresholds. Aouad–Lykouris–Zhong model AI, skill and effort as perfectly substitutable inputs, allowing AI to crowd out effort and generate deskilling. The opposite predictions reflect extensive-margin menu expansion versus intensive-margin substitution.
 
-*Intuition in one sentence:* the agent has a single target level of total input,
-tops it up with effort, and once skill plus AI already reach it he stops working.
+## Lean status — FAIL/BLOCKED
 
-Two things worth noticing about the proof. It is a **case split** — interior
-versus corner — and contains **no differentiation at all**; and the largest-argmax
-tie-break is not decoration, it is what makes $e^{*}$ well defined when
-$p(x)-\gamma x$ has a flat maximum.
+EconCSLib was cloned outside this repository and its workflow inspected. No formalization run completed: `elan`, `lean`, and `lake` are unavailable, and native Windows Python fails on the Unix-only `fcntl` dependency. No `papers/QX26AgenticDelegation/` output exists, so no `lean/` directory is submitted. Nothing was copied from the worked example. This is a blocked execution, **not** a partial Lean formalization.
 
-## Sections 3–5: stated, not derived
-
-The three headline results — the deskilling paradox, the unreliability paradox
-and skill polarisation — use machinery well beyond Section 2: a continuous-time
-birth–death Markov chain and its steady state, Arrow–Pratt risk aversion applied
-to a *production* function with IARA/DARA driving the sign, and Bayesian updating
-over a binary signal. They are worth understanding; they are not worth trying to
-reproduce in a week. See `extra/tutorial-alz-completo.pdf` for the full walk.
-
----
-
-## What is in this repository
-
-| File | What it is |
-|---|---|
-| `README.md` | This page |
-| `prompts.md` | The full LLM conversation, unedited |
-| `extensions.md` | Which assumptions could be relaxed, and which are dead ends |
-| `hand/` | The derivation of Proposition 2.1, written out by hand |
-| `presentation.tex` / `.pdf` | The 5-minute Beamer deck |
-| `paper/` | The article itself |
-| `extra/` | Above the floor: a full tutorial of the paper and two lecture decks |
-
-## What is required
-
-Only four things. The rest of this repository is above the floor.
-
-1. **`README.md`** — one page: the question, the agent's problem, the main result
-   **with all its conditions**.
-2. **`prompts.md`** — your prompts and the answers, **raw**. Do not tidy them up:
-   the value is in seeing where the model went wrong.
-3. **`hand/`** — at least one photograph of something you derived by hand. Not the
-   whole paper: the one step you did not believe until you did it yourself.
-4. **`presentation.tex` / `.pdf`** — the 5-minute deck, source and compiled.
-
-Deadline is **Tuesday 22:00**, work merged into `main` through a pull request,
-and the repository URL posted as a comment on that week's issue.
-
-## About `hand/`
-
-`hand/prop-2-1-derivacion-a-mano.pdf` is three phone photos of a notebook page.
-That is exactly the standard: crooked, with crossings-out, no transcription. What
-it shows is the first-order condition and the interior-versus-corner split written
-out step by step — the part I did not want to take on trust.
-
-## About the LLM conversation
-
-`prompts.md` is the export of the session that produced the tutorial in `extra/`.
-Read it for what it gets wrong as much as for what it gets right. The episode
-worth studying is on slide 4 of the presentation: asked for "the most natural
-extension", the model confidently proposed relaxing the linear cost — which the
-authors had already done in Appendix D. It took opening the appendix to find out.
+The handwritten derivation and compiled presentation PDF are also absent at emergency closeout. LaTeX was unavailable; only `presentation.tex` is current.
