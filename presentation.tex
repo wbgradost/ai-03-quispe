@@ -1,6 +1,7 @@
 \documentclass[aspectratio=169]{beamer}
 \usetheme{Madrid}
 \usepackage{amsmath}
+\usepackage{graphicx}
 \title{Agentic Delegation and the Language Frontier}
 \author{William B. Grados T.}
 \institute{\url{https://github.com/wbgradost/ai-03-quispe}}
@@ -36,13 +37,23 @@ At the permitted endpoint $p^2=1$, $\Delta(s)=1$ for all $s\ge0$. The printed st
 \begin{frame}{Frontier expansion versus deskilling}
 Quispe--Xu: AI adds delegated execution and lowers language-specific entry thresholds (extensive margin). Aouad--Lykouris--Zhong: AI, skill and effort are perfectly substitutable, so AI can crowd out effort (intensive margin).
 \end{frame}
-\begin{frame}{Lean status: FAIL/BLOCKED}
+\begin{frame}{Hand derivation: Proposition 3 endpoint}
+\centering
+\includegraphics[height=0.76\textheight]{hand/prop3-endpoint.jpg}
+\end{frame}
+\begin{frame}{Lean pipeline and fidelity verdict}
+\small
+\[
+\text{PAPER STATEMENT}\to\text{LEAN STATEMENT}\to\text{PROOF}
+\to\text{FIDELITY CHECK}\to\text{VERDICT}
+\]
 \begin{itemize}
-\item EconCSLib cloned outside this repository; workflow inspected.
-\item Elan, Lean and Lake unavailable; Windows Python fails on \texttt{fcntl}.
-\item No formalization run completed and no generated paper folder exists.
-\item No \texttt{lean/} was invented; nothing copied from the worked example.
+\item WSL verified Lean 4.30.0-rc2 and Lake; exact arXiv v2 source was privately hash-pinned.
+\item The official scaffold failed before creating the paper folder because the root EconCSLib module was not yet built.
+\item The base build was stopped at closeout; all proof targets remain open and the fast check fails because \texttt{status.json} is absent.
+\item Lean compilation and faithful representation are distinct: neither is claimed complete here.
+\item Independent verdict: the printed strict clause fails at $p^2=1$; an interior condition $0<p^2<1$ is necessary.
 \end{itemize}
-The endpoint calculation is a manual mathematical audit, not a Lean result from our run.
+Status: \textbf{PARTIAL}. Nothing was copied from the worked example.
 \end{frame}
 \end{document}
