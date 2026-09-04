@@ -54,4 +54,4 @@ $$\Delta C(s+1)-\Delta C(s)=p^2(1-p^2)^{s+1}.$$
 
 Thus strict growth holds for $0<p^2<1$, but fails at the source-permitted endpoint $p^2=1$. Strict concavity has the same endpoint problem. Aggregated strictness also needs a nonempty unfamiliar-language set with at least one interior hazard. This is an independent mathematical/fidelity finding, not a compiled Lean result.
 
-The handwritten derivation is included at `hand/prop3-endpoint.jpg`. `presentation.pdf` remains missing because `latexmk` is not installed; this did not block the Lean checks.
+The handwritten derivation is included at `hand/prop3-endpoint.jpg`. `presentation.pdf` was generated from `presentation.tex` with MiKTeX `pdflatex` in two passes; the PDF contains nine slides, including the handwritten derivation. The separate `latexmk` command was unavailable because its Perl engine was missing, but this did not block direct PDF generation or the Lean checks.
